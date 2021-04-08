@@ -89,13 +89,18 @@ namespace LRS
                 }
             }
 
+             
+            DataMgr.Inst.Clear();
             foreach (var line in lines)
             {
                 HandleMathData(tab, line);
             }
 
-            DataMgr.Inst.Print();
-            ScoreRank rank1 = new ScoreRank(DataMgr.Inst.m_Datas);
+            var commonRank = new CommonRank(DataMgr.Inst.m_Datas);
+            var timeRank = new TimeRank(DataMgr.Inst.m_Datas);
+            var mvpRank = new MvpRank(DataMgr.Inst.m_Datas);
+            
+            
 
 
         }

@@ -17,6 +17,11 @@ namespace LRS
             
         }
 
+        public void Clear()
+        {
+            m_Datas.Clear();
+        }
+
         public void AddData(MatchData data)
         {
             m_Datas.Add(data);

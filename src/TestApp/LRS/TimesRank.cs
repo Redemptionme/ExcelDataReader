@@ -3,36 +3,37 @@ using System.Collections.Generic;
 
 namespace LRS
 {
-    public class ScoreRankData : BaseRankData,IComparable<ScoreRankData>
+    public class TimeRankData : BaseRankData,IComparable<TimeRankData>
     {
-        public int Score = 0;
+        public int Times = 0;
         
         
         //ComparetTo:大于 1； 等于 0； 小于 -1；
-        public int CompareTo(ScoreRankData p)
+        public int CompareTo(TimeRankData p)
         {
-            return Score.CompareTo(p.Score);
+            return Times.CompareTo(p.Times);
         }
     } 
-    public class CommonRank : BaseRank<ScoreRankData>
+    public class TimeRank : BaseRank<TimeRankData>
     { 
-        public CommonRank(List<MatchData> datas)
+        public TimeRank(List<MatchData> datas)
         {
             foreach (var matchdata in datas)
             {
                 foreach (var data in matchdata.playerDatas)
                 {
-                    if (!m_dataDic.TryGetValue(data.Player,out ScoreRankData scoreData))
+                    if (!m_dataDic.TryGetValue(data.Player,out TimeRankData scoreData))
                     {
-                        var newData = new ScoreRankData();
+                        var newData = new TimeRankData();
                         newData.Player = data.Player;
                         m_dataDic[newData.Player] = newData;
                     }
 
-                    m_dataDic[data.Player].Score  += data.TotalScore;
+                    m_dataDic[data.Player].Times  += 1;
                 }
             }
 
+            
             foreach (var item in m_dataDic)
             {
                 m_dataList.Add(item.Value);
