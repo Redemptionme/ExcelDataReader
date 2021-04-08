@@ -5,6 +5,8 @@ using System.IO;
 using System.Windows.Forms;
 using ExcelDataReader;
 using System.Diagnostics;
+using ExcelDataReader.Log;
+using LRS;
 
 namespace TestApp
 {
@@ -267,7 +269,8 @@ namespace TestApp
                     UseColumnDataType = false,
                     ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
                     {
-                        UseHeaderRow = firstRowNamesCheckBox.Checked
+                        // 判断是否使用首行列
+                        UseHeaderRow = false//firstRowNamesCheckBox.Checked
                     }
                 });
 
@@ -275,15 +278,20 @@ namespace TestApp
 
                 var tablenames = GetTablenames(ds.Tables);
                 sheetCombo.DataSource = tablenames;
-
+                
+                
                 if (tablenames.Count > 0)
                     sheetCombo.SelectedIndex = 0;
+
+                ExcelDataReaderHelper.HandleExcelData(ds); 
             }
             catch (Exception ex) 
             {
                 MessageBox.Show(ex.ToString(), ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+       
 
         private void SelectTable()
         {
