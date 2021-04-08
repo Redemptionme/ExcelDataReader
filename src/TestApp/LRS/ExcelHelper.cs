@@ -99,7 +99,8 @@ namespace LRS
             var commonRank = new CommonRank(DataMgr.Inst.m_Datas);
             var timeRank = new TimeRank(DataMgr.Inst.m_Datas);
             var mvpRank = new MvpRank(DataMgr.Inst.m_Datas);
-            
+            var goodCampRank = new GoodCampRank(DataMgr.Inst.m_Datas);
+            var badCampRank = new BadCampRank(DataMgr.Inst.m_Datas);
             
 
 
