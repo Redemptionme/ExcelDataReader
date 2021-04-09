@@ -1,37 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LRS
-{
-    public class MvpRankData : BaseRankData,IComparable<MvpRankData>
-    {
-        public int Times = 0;
-        
-        
-        //ComparetTo:大于 1； 等于 0； 小于 -1；
-        public int CompareTo(MvpRankData p)
-        {
-            return Times.CompareTo(p.Times);
-        }
-    } 
-    public class MvpRank : BaseRank<MvpRankData>
+namespace LRS.Rank
+{ 
+    public class TimeDataRank : BaseRank<BaseRankData>
     { 
-        public MvpRank(List<MatchData> datas)
+        public TimeDataRank(List<MatchData> datas)
         {
             foreach (var matchdata in datas)
             {
                 foreach (var data in matchdata.playerDatas)
                 {
-                    if (!m_dataDic.TryGetValue(data.Player,out MvpRankData scoreData))
+                    if (!m_dataDic.TryGetValue(data.Player,out var scoreData))
                     {
-                        var newData = new MvpRankData();
+                        var newData = new BaseRankData();
                         newData.Player = data.Player;
                         m_dataDic[newData.Player] = newData;
                     }
 
-                    m_dataDic[data.Player].Times  += data.MvpScore;
+                    m_dataDic[data.Player].CompareValue  += 1;
                 }
             }
+
+            
             foreach (var item in m_dataDic)
             {
                 m_dataList.Add(item.Value);

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using ExcelDataReader.Log;
+using LRS.Rank;
 
 namespace LRS
 {
@@ -9,6 +11,31 @@ namespace LRS
     {
         //private static Dictionary<string, List<List<string>>> g_excelData = new Dictionary<string, List<List<string>>>();
         private static DataSet g_dataSet;
+        public static string g_outName;
+
+
+        public static void PrintRank(string rankName, string headName1, string headName2, string headName3,
+            string headName4,BaseRank<BaseRankData> rank)
+        {
+            PrintCsv(rankName);
+            PrintCsv(headName1 + "," + headName2+ "," + headName3+ "," + headName4 );
+            for (int i = 0; i < rank.m_dataList.Count; i++)
+            {
+                var data = rank.m_dataList[i];
+                PrintCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + data.CompareValue);
+            }
+            PrintCsv("");
+            
+            
+        }
+        
+        public static void PrintCsv(string str, bool append = true)
+        {
+            using (var sw = new StreamWriter(g_outName, append))
+            {
+                sw.WriteLine(str);
+            }
+        }
 
         public static int stringToint(object obj)
         {
@@ -36,14 +63,13 @@ namespace LRS
                 case "血月使徒": return EGameCard.Xyst;
                 default: break;
             };
-
+            throw new System.NotImplementedException(str + "该卡牌不符合名字标准");
             return EGameCard.None;
-        } 
-        
-        
+        }  
         
         public static void HandleExcelData(DataSet dataSet)
         {
+            DataMgr.Inst.Clear();
             g_dataSet = dataSet;
             //g_excelData.Clear();
             foreach (var table in dataSet.Tables)
@@ -57,6 +83,52 @@ namespace LRS
                 //g_excelData.Add(tableName,new List<List<string>>());
                 HandleTabData(tab);
             }
+
+            CalRank();
+            
+        }
+
+        private static void CalRank()
+        {
+            var scoreRank = new ScoreRank(DataMgr.Inst.m_Datas);
+            ExcelDataReaderHelper.PrintRank("积分榜","排名","工号","姓名","积分",scoreRank);
+            var timeRank = new TimeDataRank(DataMgr.Inst.m_Datas);
+            
+            var mvpRank = new MvpRank(DataMgr.Inst.m_Datas);
+            var godRank = new GodRank(DataMgr.Inst.m_Datas);
+            var goodCampRank = new ScoreRank(DataMgr.Inst.m_Datas, playerData =>
+            {
+                return playerData.Card > EGameCard.BadCardEnd && playerData.Card < EGameCard.GoodCardEnd;
+            });
+            var badCampRank = new ScoreRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card > EGameCard.None && player.Card < EGameCard.BadCardEnd;
+            });
+
+            var yyjRank = new OpRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card == EGameCard.Yyj;
+            });
+            
+            var lrRank = new OpRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card == EGameCard.Lr;
+            });
+            
+            var lmrRank = new OpRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card == EGameCard.Lmr;
+            });
+            
+            var swRank = new OpRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card == EGameCard.Sw;
+            });
+            
+            var noSkillRank = new OpRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card == EGameCard.Cm || player.Card == EGameCard.Bc;
+            });
         }
 
         public static void HandleTabData(DataTable tab)
@@ -88,22 +160,11 @@ namespace LRS
                     lines.Add(i);
                 }
             }
-
-             
-            DataMgr.Inst.Clear();
+            
             foreach (var line in lines)
             {
                 HandleMathData(tab, line);
             }
-
-            var commonRank = new CommonRank(DataMgr.Inst.m_Datas);
-            var timeRank = new TimeRank(DataMgr.Inst.m_Datas);
-            var mvpRank = new MvpRank(DataMgr.Inst.m_Datas);
-            var goodCampRank = new GoodCampRank(DataMgr.Inst.m_Datas);
-            var badCampRank = new BadCampRank(DataMgr.Inst.m_Datas);
-            
-
-
         }
 
         public static void HandleMathData(DataTable tab,int starline)
@@ -154,8 +215,7 @@ namespace LRS
                 
                 if (totalScore != winScore + dayScore)
                 {
-                    HHL.Common.Log.Inst.Print("分数算错");
-                    throw new System.NotImplementedException();
+                    throw new System.NotImplementedException( info.AllDay+ " " + curLine +"行"+ playerInfo.Name + "总分数算错");
                 }
                 
                 var opScore = stringToint(tab.Rows[curLine][12]);
