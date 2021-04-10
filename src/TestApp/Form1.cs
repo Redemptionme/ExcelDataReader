@@ -254,8 +254,9 @@ namespace TestApp
             try
             {
                 string inputName = textBox1.Text;
-                ExcelDataReaderHelper.g_outName = inputName.Replace(".xlsx", "_Rank.csv");
-                ExcelDataReaderHelper.PrintCsv("",false);
+                ExcelDataReaderHelper.g_rankFileName = inputName.Replace(".xlsx", "_Rank.csv");
+                ExcelDataReaderHelper.g_systemDataFileName = ExcelDataReaderHelper.g_rankFileName.Replace("_Rank.csv","_System.csv");
+                ExcelDataReaderHelper.PrintRankCsv("",false);
                 
                 using var stream = new FileStream(textBox1.Text, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 

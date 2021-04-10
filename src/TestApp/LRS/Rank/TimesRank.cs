@@ -19,6 +19,7 @@ namespace LRS.Rank
                     }
 
                     m_dataDic[data.Player].CompareValue  += 1;
+                    m_dataDic[data.Player].allTimes  += 1;
                 }
             }
 

@@ -2,11 +2,11 @@
 
 namespace LRS.Rank
 {
-    public class ScoreRank : BaseRank<BaseRankData>
+    public class DayScoreRank : BaseRank<BaseRankData>
     {
         private CheckPlayerFunc m_checkFunc;
         
-        public ScoreRank(List<MatchData> datas,CheckPlayerFunc checkFunc = null)
+        public DayScoreRank(List<MatchData> datas,CheckPlayerFunc checkFunc = null)
         {
             m_checkFunc = checkFunc;
             foreach (var matchdata in datas)
@@ -25,7 +25,7 @@ namespace LRS.Rank
                         m_dataDic[newData.Player] = newData;
                     }
 
-                    m_dataDic[data.Player].CompareValue  += data.TotalScore;
+                    m_dataDic[data.Player].CompareValue  += data.DayScore;
                     m_dataDic[data.Player].allTimes  += 1;
                 }
             }

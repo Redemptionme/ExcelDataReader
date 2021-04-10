@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Windows.Forms.VisualStyles;
 using ExcelDataReader.Log;
 using LRS.Rank;
 
@@ -11,27 +12,53 @@ namespace LRS
     {
         //private static Dictionary<string, List<List<string>>> g_excelData = new Dictionary<string, List<List<string>>>();
         private static DataSet g_dataSet;
-        public static string g_outName;
+        public static string g_systemDataFileName;
+        public static string g_rankFileName;
 
 
         public static void PrintRank(string rankName, string headName1, string headName2, string headName3,
-            string headName4,BaseRank<BaseRankData> rank)
+            string headName4,string headName5,BaseRank<BaseRankData> rank)
         {
-            PrintCsv(rankName);
-            PrintCsv(headName1 + "," + headName2+ "," + headName3+ "," + headName4 );
+            PrintRankCsv(rankName);
+            PrintRankCsv(headName1 + "," + headName2+ "," + headName3+ "," + headName4  + "," + headName5);
             for (int i = 0; i < rank.m_dataList.Count; i++)
             {
                 var data = rank.m_dataList[i];
-                PrintCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + data.CompareValue);
+                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + data.CompareValue + "," + data.allTimes);
             }
-            PrintCsv("");
+            PrintRankCsv("");
             
             
         }
         
-        public static void PrintCsv(string str, bool append = true)
+        public static void PrintRateRank(string rankName, string headName1, string headName2, string headName3,
+            string headName4,string headName5,BaseRank<RateData> rank)
         {
-            using (var sw = new StreamWriter(g_outName, append))
+            PrintRankCsv(rankName);
+            PrintRankCsv(headName1 + "," + headName2+ "," + headName3+ "," + headName4 + "," + headName5);
+            for (int i = 0; i < rank.m_dataList.Count; i++)
+            {
+                var data = rank.m_dataList[i];
+                var perNum = (float)data.CompareValue / 100.0f;
+                
+                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + perNum + "," + data.allTimes);
+            }
+            PrintRankCsv("");
+        }
+        
+        public static void PrintRankCsv(string str, bool append = true)
+        {
+            WriteFile(g_rankFileName, str, append);
+        }
+         
+        public static void PrintSystemData(string str, bool append = true)
+        {
+            WriteFile(g_systemDataFileName, str, append);
+        }
+
+        public static void WriteFile(string fileName, string str, bool append = true)
+        {
+            using (var sw = new StreamWriter(fileName, append))
             {
                 sw.WriteLine(str);
             }
@@ -53,7 +80,7 @@ namespace LRS
             {
                 case "村民": return EGameCard.Cm;
                 case "预言家": return EGameCard.Yyj;
-                case "女巫": return EGameCard.Nv;
+                case "女巫": return EGameCard.Nw;
                 case "猎人": return EGameCard.Lr;
                 case "守卫": return EGameCard.Sw;
                 case "猎魔人": return EGameCard.Lmr;
@@ -65,7 +92,46 @@ namespace LRS
             };
             throw new System.NotImplementedException(str + "该卡牌不符合名字标准");
             return EGameCard.None;
-        }  
+        }
+
+        public static string GetCardName(EGameCard eType)
+        {
+            switch (eType)
+            {
+                case EGameCard.Langr:
+                    return "狼人";
+                case EGameCard.Lw:
+                    return "狼王";
+                case EGameCard.Lx:
+                    return "狼兄";
+                case EGameCard.Ld:
+                    return "狼弟";
+                case EGameCard.Xyst:
+                    return "血月使徒";
+                case EGameCard.Cm:
+                    return "村民";
+                case EGameCard.Yyj:
+                    return "预言家";
+                case EGameCard.Nw:
+                    return "女巫";
+                case EGameCard.Lr:
+                    return "猎人";
+                case EGameCard.Bc:
+                    return "白痴";
+                case EGameCard.Sw:
+                    return "守卫";
+                case EGameCard.Hssr:
+                    return "黑市商人";
+                case EGameCard.Lmr:
+                    return "猎魔人";
+                case EGameCard.FG:
+                    return "法官";
+            }
+
+            return "错误卡牌";
+        }
+        
+        
         
         public static void HandleExcelData(DataSet dataSet)
         {
@@ -85,50 +151,111 @@ namespace LRS
             }
 
             CalRank();
-            
+            CalExRank();
+            GenDataSystem();
         }
 
+        private static void GenDataSystem()
+        {
+            
+            
+            
+        }
+        
         private static void CalRank()
         {
             var scoreRank = new ScoreRank(DataMgr.Inst.m_Datas);
-            ExcelDataReaderHelper.PrintRank("积分榜","排名","工号","姓名","积分",scoreRank);
+            ExcelDataReaderHelper.PrintRank("积分榜","排名","工号","姓名","积分","总场",scoreRank);
             var timeRank = new TimeDataRank(DataMgr.Inst.m_Datas);
+            ExcelDataReaderHelper.PrintRank("次数排行版","排名","工号","姓名","次数","总场",timeRank);
             
             var mvpRank = new MvpRank(DataMgr.Inst.m_Datas);
+            ExcelDataReaderHelper.PrintRank("MVP榜","排名","工号","姓名","MVP","总场",mvpRank);
             var godRank = new GodRank(DataMgr.Inst.m_Datas);
+            ExcelDataReaderHelper.PrintRank("上帝版","排名","工号","姓名","次数","总场",godRank);
             var goodCampRank = new ScoreRank(DataMgr.Inst.m_Datas, playerData =>
             {
-                return playerData.Card > EGameCard.BadCardEnd && playerData.Card < EGameCard.GoodCardEnd;
+                return playerData.Card > EGameCard.GoodCardBegin && playerData.Card < EGameCard.GoodCardEnd;
             });
+            ExcelDataReaderHelper.PrintRank("正义领袖榜","排名","工号","姓名","积分","总场",goodCampRank);
+            
             var badCampRank = new ScoreRank(DataMgr.Inst.m_Datas, player =>
             {
-                return player.Card > EGameCard.None && player.Card < EGameCard.BadCardEnd;
+                return player.Card > EGameCard.BadCardBegin && player.Card < EGameCard.BadCardEnd;
             });
+            ExcelDataReaderHelper.PrintRank("狼王榜","排名","工号","姓名","积分","总场",badCampRank);
 
             var yyjRank = new OpRank(DataMgr.Inst.m_Datas, player =>
             {
                 return player.Card == EGameCard.Yyj;
             });
+            ExcelDataReaderHelper.PrintRank("预言家榜","排名","工号","姓名","操作分","总场",yyjRank);
             
-            var lrRank = new OpRank(DataMgr.Inst.m_Datas, player =>
+            var nwRank = new OpRank(DataMgr.Inst.m_Datas, player =>
             {
-                return player.Card == EGameCard.Lr;
+                return player.Card == EGameCard.Nw;
             });
+            ExcelDataReaderHelper.PrintRank("女巫榜","排名","工号","姓名","操作分","总场",nwRank);
             
             var lmrRank = new OpRank(DataMgr.Inst.m_Datas, player =>
             {
                 return player.Card == EGameCard.Lmr;
             });
-            
+            ExcelDataReaderHelper.PrintRank("猎魔人榜","排名","工号","姓名","操作分","总场",lmrRank);
             var swRank = new OpRank(DataMgr.Inst.m_Datas, player =>
             {
                 return player.Card == EGameCard.Sw;
             });
-            
-            var noSkillRank = new OpRank(DataMgr.Inst.m_Datas, player =>
+            ExcelDataReaderHelper.PrintRank("守卫榜","排名","工号","姓名","操作分","总场",swRank);
+            var noSkillRank = new DayScoreRank(DataMgr.Inst.m_Datas, player =>
             {
                 return player.Card == EGameCard.Cm || player.Card == EGameCard.Bc;
             });
+            ExcelDataReaderHelper.PrintRank("徒手抓狼榜","排名","工号","姓名","投票分","总场",noSkillRank);
+        }
+        
+        private static void CalExRank()
+        {
+            ExcelDataReaderHelper.PrintRankCsv("==========奖励无关数据================================");
+            
+            var dayScoreRank = new DayScoreRank(DataMgr.Inst.m_Datas);
+            ExcelDataReaderHelper.PrintRank("投票榜","排名","工号","姓名","投票分","总场",dayScoreRank);
+            
+            var rateRank = new RateRank(DataMgr.Inst.m_Datas);
+            ExcelDataReaderHelper.PrintRateRank("胜率榜","排名","工号","姓名","百分比","总场",rateRank);
+            
+            var goodRateRank = new RateRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card > EGameCard.GoodCardBegin && player.Card < EGameCard.GoodCardEnd;
+            });
+            ExcelDataReaderHelper.PrintRateRank("正义阵营胜率榜","排名","工号","姓名","百分比","总场",goodRateRank);
+            
+            var badRateRank = new RateRank(DataMgr.Inst.m_Datas, player =>
+            {
+                return player.Card > EGameCard.BadCardBegin && player.Card < EGameCard.BadCardEnd;
+            });
+            ExcelDataReaderHelper.PrintRateRank("邪恶秩序胜率榜","排名","工号","姓名","百分比","总场",badRateRank);
+
+            for (int i = (int)EGameCard.None; i <= (int)EGameCard.FG; i++)
+            {
+                EGameCard eCard = (EGameCard)i;
+                if (eCard == EGameCard.None || eCard == EGameCard.FG || eCard == EGameCard.GoodCardBegin || eCard == EGameCard.GoodCardEnd || eCard == EGameCard.BadCardBegin || eCard == EGameCard.BadCardEnd)
+                {
+                    continue;
+                }
+                var cardRateRank = new RateRank(DataMgr.Inst.m_Datas, player =>
+                {
+                    return player.Card == eCard;
+                });
+                if (cardRateRank.m_dataList.Count == 0 || cardRateRank.m_dataList[0].allTimes == 0)
+                {
+                    continue;
+                }
+
+                var cardName = GetCardName(eCard);
+                
+                ExcelDataReaderHelper.PrintRateRank(cardName + "胜率榜","排名","工号","姓名","百分比","总场",cardRateRank);
+            } 
         }
 
         public static void HandleTabData(DataTable tab)

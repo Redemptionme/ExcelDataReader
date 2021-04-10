@@ -8,6 +8,7 @@ namespace LRS.Rank
     {
         public PlayerInfo Player;
         public int CompareValue = 0;
+        public int allTimes;
         
         //ComparetTo:大于 1； 等于 0； 小于 -1；
         public int CompareTo(BaseRankData p)
@@ -31,10 +32,11 @@ namespace LRS.Rank
             return null;
         }
 
-        public void Sort()
+        protected virtual void Sort()
         {
             // 降序
-            m_dataList.Sort((x, y) => -x.CompareTo(y));
+            //m_dataList.Sort((x, y) => -x.CompareTo(y));
+            m_dataList.Sort((x, y) => -x.CompareTo(y) * 2 + -x.allTimes.CompareTo(y.allTimes));
         }
         
         public void Clear()

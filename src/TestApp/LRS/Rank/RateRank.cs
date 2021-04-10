@@ -2,11 +2,16 @@
 
 namespace LRS.Rank
 {
-    public class ScoreRank : BaseRank<BaseRankData>
+    public class RateData : BaseRankData
+    {
+        public int winTimes;
+    }
+    
+    public class RateRank : BaseRank<RateData>
     {
         private CheckPlayerFunc m_checkFunc;
         
-        public ScoreRank(List<MatchData> datas,CheckPlayerFunc checkFunc = null)
+        public RateRank(List<MatchData> datas,CheckPlayerFunc checkFunc = null)
         {
             m_checkFunc = checkFunc;
             foreach (var matchdata in datas)
@@ -20,13 +25,18 @@ namespace LRS.Rank
                     
                     if (!m_dataDic.TryGetValue(data.Player,out var scoreData))
                     {
-                        var newData = new BaseRankData();
+                        var newData = new RateData();
                         newData.Player = data.Player;
                         m_dataDic[newData.Player] = newData;
                     }
 
-                    m_dataDic[data.Player].CompareValue  += data.TotalScore;
                     m_dataDic[data.Player].allTimes  += 1;
+                    m_dataDic[data.Player].winTimes  += data.WinScore > 0 ? 1 : 0;
+                    if (m_dataDic[data.Player].winTimes != 0)
+                    {
+                        m_dataDic[data.Player].CompareValue =
+                            m_dataDic[data.Player].winTimes * 10000 / m_dataDic[data.Player].allTimes;    
+                    }
                 }
             }
 
@@ -37,5 +47,6 @@ namespace LRS.Rank
             
             Sort();
         }
+        
     }
 }

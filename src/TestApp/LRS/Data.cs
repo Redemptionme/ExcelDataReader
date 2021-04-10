@@ -12,23 +12,22 @@ namespace LRS
 
     public enum EGameCard {  
         None = -1, 
+        BadCardBegin,
         Langr,//狼人
         Lw,//狼王
         Lx,//狼兄
         Ld,//狼弟    
         Xyst, //血月使徒
-        
         BadCardEnd, // 坏身份结束-----------
-        
+        GoodCardBegin,
         Cm,// 村民
         Yyj,// 预言家
-        Nv,//女巫
+        Nw,//女巫
         Lr,//猎人
         Bc,//白痴    
         Sw,//守卫
         Hssr,//黑商商人
         Lmr, //猎魔人
-        
         GoodCardEnd,// 好身份结束-----------
         
         FG, // 法官
