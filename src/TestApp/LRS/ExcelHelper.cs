@@ -157,9 +157,14 @@ namespace LRS
 
         private static void GenDataSystem()
         {
-            
-            
-            
+            // 处理玩家分数系统，也要搞个整体比赛数量，狼获胜情况
+            Dictionary<PlayerInfo, List<PlayerData>> m_DataSystem = new Dictionary<PlayerInfo, List<PlayerData>>();
+            foreach (var matchData in DataMgr.Inst.m_Datas)
+            {
+                
+            }
+
+
         }
         
         private static void CalRank()
