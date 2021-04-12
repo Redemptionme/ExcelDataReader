@@ -7,8 +7,14 @@ namespace LRS.Rank
     {
         private CheckPlayerFunc m_checkFunc;
         
-        public OpRank(List<MatchData> datas,CheckPlayerFunc checkFunc = null)
+        public OpRank()
         {
+            
+        }
+
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        {
+            base.Init(datas, checkFunc);
             m_checkFunc = checkFunc;
             foreach (var matchdata in datas)
             {
@@ -38,6 +44,5 @@ namespace LRS.Rank
             
             Sort();
         }
- 
     }
 }

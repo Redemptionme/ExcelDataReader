@@ -2,17 +2,23 @@
 
 namespace LRS.Rank
 {
-    public class RateData : BaseRankData
+    public class RateRankData : BaseRankData
     {
-        public int winTimes;
+        public RateData RateData = new RateData();
     }
     
-    public class RateRank : BaseRank<RateData>
+    public class WinRateRank : BaseRank<RateRankData>
     {
         private CheckPlayerFunc m_checkFunc;
         
-        public RateRank(List<MatchData> datas,CheckPlayerFunc checkFunc = null)
+        public WinRateRank()
         {
+            
+        }
+
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        {
+            base.Init(datas, checkFunc);
             m_checkFunc = checkFunc;
             foreach (var matchdata in datas)
             {
@@ -25,18 +31,16 @@ namespace LRS.Rank
                     
                     if (!m_dataDic.TryGetValue(data.Player,out var scoreData))
                     {
-                        var newData = new RateData();
+                        var newData = new RateRankData();
                         newData.Player = data.Player;
                         m_dataDic[newData.Player] = newData;
                     }
-
+                    
+                    m_dataDic[data.Player].RateData.WinValue  += data.WinScore > 0 ? 1 : 0;
+                    m_dataDic[data.Player].RateData.AllValue  += 1;
+                    m_dataDic[data.Player].RateData.CalRate();
                     m_dataDic[data.Player].allTimes  += 1;
-                    m_dataDic[data.Player].winTimes  += data.WinScore > 0 ? 1 : 0;
-                    if (m_dataDic[data.Player].winTimes != 0)
-                    {
-                        m_dataDic[data.Player].CompareValue =
-                            m_dataDic[data.Player].winTimes * 10000 / m_dataDic[data.Player].allTimes;    
-                    }
+                    m_dataDic[data.Player].CompareValue  = (int)(m_dataDic[data.Player].RateData.Rate * 10000);
                 }
             }
 
@@ -47,6 +51,5 @@ namespace LRS.Rank
             
             Sort();
         }
-        
     }
 }

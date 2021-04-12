@@ -254,9 +254,9 @@ namespace TestApp
             try
             {
                 string inputName = textBox1.Text;
-                ExcelDataReaderHelper.g_rankFileName = inputName.Replace(".xlsx", "_Rank.csv");
-                ExcelDataReaderHelper.g_systemDataFileName = ExcelDataReaderHelper.g_rankFileName.Replace("_Rank.csv","_System.csv");
-                ExcelDataReaderHelper.PrintRankCsv("",false);
+                LrsHelper.g_rankFileName = inputName.Replace(".xlsx", "_Rank.csv");
+                LrsHelper.g_systemDataFileName = LrsHelper.g_rankFileName.Replace("_Rank.csv","_System.csv");
+                LrsHelper.PrintRankCsv("",false);
                 
                 using var stream = new FileStream(textBox1.Text, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
@@ -286,7 +286,7 @@ namespace TestApp
                 if (tablenames.Count > 0)
                     sheetCombo.SelectedIndex = 0;
 
-                ExcelDataReaderHelper.HandleExcelData(ds); 
+                LrsHelper.HandleExcelData(ds); 
             }
             catch (Exception ex) 
             {

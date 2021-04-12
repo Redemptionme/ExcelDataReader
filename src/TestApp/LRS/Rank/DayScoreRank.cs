@@ -6,8 +6,14 @@ namespace LRS.Rank
     {
         private CheckPlayerFunc m_checkFunc;
         
-        public DayScoreRank(List<MatchData> datas,CheckPlayerFunc checkFunc = null)
+        public DayScoreRank()
         {
+            
+        }
+
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        {
+            base.Init(datas, checkFunc);
             m_checkFunc = checkFunc;
             foreach (var matchdata in datas)
             {

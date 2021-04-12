@@ -20,7 +20,38 @@ namespace LRS.Rank
     {
         public List<T> m_dataList = new List<T>();
         public Dictionary<PlayerInfo, T> m_dataDic = new Dictionary<PlayerInfo, T>();
-        public string m_rankName;
+
+        public virtual void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        {
+            m_dataDic.Clear();
+            m_dataDic.Clear();
+        }
+
+        public string PrintPlayerRank(PlayerInfo player)
+        {
+            int rankNum = GetPlayerRank(player);
+            if (rankNum == 0)
+            {
+                return "未进榜";    
+            }
+            else
+            {
+                T e = GetPlayerData(player);
+                return e.CompareValue + "分    排名 " + rankNum;
+            }
+        }
+        public int GetPlayerRank(PlayerInfo player)
+        {
+            for (int i = 0; i < m_dataList.Count; i++)
+            {
+                if (player == m_dataList[i].Player)
+                {
+                    return i + 1;
+                }
+            }
+
+            return 0;
+        }
         
         public T GetPlayerData(PlayerInfo player)
         {

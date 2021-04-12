@@ -5,8 +5,14 @@ namespace LRS.Rank
 { 
     public class TimeDataRank : BaseRank<BaseRankData>
     { 
-        public TimeDataRank(List<MatchData> datas)
+        public TimeDataRank()
         {
+            
+        }
+
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        {
+            base.Init(datas, checkFunc);
             foreach (var matchdata in datas)
             {
                 foreach (var data in matchdata.playerDatas)
@@ -31,7 +37,7 @@ namespace LRS.Rank
             
             // 降序
             m_dataList.Sort((x, y) => -x.CompareTo(y));
+            
         }
- 
     }
 }

@@ -5,8 +5,14 @@ namespace LRS.Rank
 { 
     public class MvpRank : BaseRank<BaseRankData>
     { 
-        public MvpRank(List<MatchData> datas)
+        public MvpRank()
         {
+            
+        }
+
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        {
+            base.Init(datas, checkFunc);
             foreach (var matchdata in datas)
             {
                 foreach (var data in matchdata.playerDatas)
@@ -29,6 +35,5 @@ namespace LRS.Rank
             
             Sort();
         }
- 
     }
 }

@@ -6,8 +6,14 @@ namespace LRS.Rank
 { 
     public class GodRank : BaseRank<BaseRankData>
     { 
-        public GodRank(List<MatchData> datas)
+        public GodRank()
         {
+            
+        }
+
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        {
+            base.Init(datas, checkFunc);
             foreach (var matchdata in datas)
             {
                 if (!m_dataDic.TryGetValue(matchdata.Info.God,out var timeRankData))
@@ -29,6 +35,5 @@ namespace LRS.Rank
             
             Sort();
         }
- 
     }
 }
