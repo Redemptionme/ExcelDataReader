@@ -94,7 +94,7 @@ namespace LRS
                 var extendScore = stringToint(tab.Rows[curLine][10]);
                 var totalScore = stringToint(tab.Rows[curLine][11]);
                 
-                if (totalScore != winScore + dayScore)
+                if (totalScore != winScore + dayScore + extendScore)
                 {
                     throw new System.NotImplementedException( info.AllDay+ " " + curLine +"行"+ playerInfo.Name + "总分数算错");
                 }
