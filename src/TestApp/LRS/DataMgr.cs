@@ -21,7 +21,7 @@ namespace LRS
         public OpRank m_lrRank = new OpRank(); 
         public OpRank m_lmrRank = new OpRank(); 
         public OpRank m_swRank = new OpRank(); 
-        public OpRank m_noSkillRank = new OpRank();
+        public DayScoreRank m_noSkillRank = new DayScoreRank();
         
         public DayScoreRank m_DayScoreRank = new DayScoreRank();
         public Dictionary<EGameCard, WinRateRank> m_winRateRankDic = new Dictionary<EGameCard, WinRateRank>();
@@ -29,6 +29,9 @@ namespace LRS
         public Dictionary<PlayerInfo, List<PlayerData>> m_playerDataSystem = new Dictionary<PlayerInfo, List<PlayerData>>();
 
         public Dictionary<PlayerInfo, string> m_psdDic = new Dictionary<PlayerInfo, string>();
+        
+        // 游戏总数据
+        
         
         
         public override void Init()
