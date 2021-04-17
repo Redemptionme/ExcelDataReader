@@ -24,6 +24,41 @@ namespace LRS
             }
         }
         
+        public static void HandleExcelData(DataSet dataSet,DataSet dataSet2)
+        {
+            DataMgr.Inst.Clear();
+            g_dataSet = dataSet;
+            g_dataSet2 = dataSet2;
+            //g_excelData.Clear();
+            foreach (var table in dataSet.Tables)
+            {
+                var tab = table as DataTable;
+                if (!tab.TableName.Contains("2021-"))
+                {
+                    continue;
+                }
+
+                //g_excelData.Add(tableName,new List<List<string>>());
+                HandleTabData(tab);
+            }
+            
+            HandlePsd(dataSet2.Tables[0]);
+
+            DataMgr.Inst.GenMatchRank();
+            DataMgr.Inst.GenDataSystem();
+        }
+
+        private static void HandlePsd(DataTable tab)
+        {
+            DataMgr.Inst.m_psdDic.Clear();
+            for (int i = 0; i < tab.Rows.Count; i++)
+            {
+                int workNum = int.Parse(tab.Rows[i][2].ToString());
+                string psd = tab.Rows[i][3].ToString();
+                DataMgr.Inst.m_psdDic.Add(workNum,psd);
+            }
+        }
+
         public static void HandleTabData(DataTable tab)
         {   
             // 第一次扫描先确定3盘的标记号
@@ -108,5 +143,7 @@ namespace LRS
             
             DataMgr.Inst.AddData(matchData);
         }
+
+        
     }
 }

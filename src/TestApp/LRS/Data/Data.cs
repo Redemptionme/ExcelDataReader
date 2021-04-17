@@ -85,6 +85,8 @@ namespace LRS
             Banzi = banzi;
         }
     }
+    
+    
 
     // 玩家信息
     public class PlayerInfo

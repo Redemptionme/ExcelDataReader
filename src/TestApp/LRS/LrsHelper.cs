@@ -10,6 +10,7 @@ namespace LRS
     {
         //private static Dictionary<string, List<List<string>>> g_excelData = new Dictionary<string, List<List<string>>>();
         private static DataSet g_dataSet;
+        private static DataSet g_dataSet2;
         public static string g_systemDataFileName;
         public static string g_rankFileName;
 
@@ -48,8 +49,8 @@ namespace LRS
         public static void PrintSystemData(Dictionary<PlayerInfo, List<PlayerData>> dic)
         {
             PrintSystemDataCsv("", false);
-            string str = "工号,姓名,密码";
-            str += ",总积分,参赛次数,MVP,正义领袖榜,狼王榜,预言家榜,女巫榜,猎人榜,猎魔人榜,守卫榜,徒手抓狼版";
+            string str = "工号,密码";
+            str += ",概况,A类积分赛,B类参与奖,C类高阶称号,D类称号";
             
             for (int i = (int)EGameCard.None; i < (int)EGameCard.FG; i++)
             {
@@ -64,23 +65,38 @@ namespace LRS
             foreach (var item in dic)
             {
                 var dataSystem = new DataSystem(item.Value);
-                dataSystem.Psd = "1";
 
-                str = item.Key.WorkNum
-                      + "," + item.Key.Name
-                      + "," + dataSystem.Psd;
+                if (DataMgr.Inst.m_psdDic.TryGetValue(item.Key.WorkNum,out var psd))
+                { 
+                    dataSystem.Psd = psd;    
+                }
+                else
+                {
+                    dataSystem.Psd = "88888888";
+                }
+
+                str = item.Key.WorkNum + "," + dataSystem.Psd;
+                str += "," + item.Key.Name
+                           + " 参与 " + dataSystem.CardScoreDic[EGameCard.AllCard].WinRate.AllValue + " 次"
+                           + " 总积分 " + dataSystem.CardScoreDic[EGameCard.AllCard].Score + " 分"
+                           + " MVP " + dataSystem.MvpScore + " 次"
+                           + " 总胜率 " + (dataSystem.CardScoreDic[EGameCard.AllCard].WinRate.Rate * 100).ToString("F2") +
+                           " %";
+                           
 
                 str += "," + DataMgr.Inst.m_scoreRank.PrintPlayerRank(item.Key);
                 str += "," + DataMgr.Inst.m_timeRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_mvpRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_goodCampRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_badCampRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_yyjRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_nwRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_lrRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_lmrRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_swRank.PrintPlayerRank(item.Key);
-                str += "," + DataMgr.Inst.m_noSkillRank.PrintPlayerRank(item.Key);
+                
+                str += ",号令天下Mvp " + DataMgr.Inst.m_mvpRank.PrintPlayerRank(item.Key) 
+                    + "  正义领袖 " +DataMgr.Inst.m_goodCampRank.PrintPlayerRank(item.Key) 
+                    + "  狼王榜 " + DataMgr.Inst.m_badCampRank.PrintPlayerRank(item.Key);
+                    
+                str += ",预言家 " + DataMgr.Inst.m_yyjRank.PrintPlayerRank(item.Key)
+                    + " 女巫 " + DataMgr.Inst.m_nwRank.PrintPlayerRank(item.Key)
+                    + " 猎人 " + DataMgr.Inst.m_lrRank.PrintPlayerRank(item.Key)
+                    + " 猎魔人" + DataMgr.Inst.m_lmrRank.PrintPlayerRank(item.Key)
+                    + " 守卫" + DataMgr.Inst.m_swRank.PrintPlayerRank(item.Key)
+                    + " 徒手抓狼" + DataMgr.Inst.m_noSkillRank.PrintPlayerRank(item.Key);
                 
                 // 胜率数据集合
                 for (int i = (int)EGameCard.None; i < (int)EGameCard.FG; i++)
@@ -231,26 +247,6 @@ namespace LRS
 
             return "错误卡牌";
         }
-         
-        public static void HandleExcelData(DataSet dataSet)
-        {
-            DataMgr.Inst.Clear();
-            g_dataSet = dataSet;
-            //g_excelData.Clear();
-            foreach (var table in dataSet.Tables)
-            {
-                var tab = table as DataTable;
-                if (!tab.TableName.Contains("2021-"))
-                {
-                    continue;
-                }
 
-                //g_excelData.Add(tableName,new List<List<string>>());
-                HandleTabData(tab);
-            }
-
-            DataMgr.Inst.GenMatchRank();
-            DataMgr.Inst.GenDataSystem();
-        }
     }
 }

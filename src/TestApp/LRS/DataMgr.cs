@@ -28,10 +28,10 @@ namespace LRS
         
         public Dictionary<PlayerInfo, List<PlayerData>> m_playerDataSystem = new Dictionary<PlayerInfo, List<PlayerData>>();
 
-        public Dictionary<PlayerInfo, string> m_psdDic = new Dictionary<PlayerInfo, string>();
+        public Dictionary<int, string> m_psdDic = new Dictionary<int, string>();
         
         // 游戏总数据
-        
+        public AllMatchInfo m_AllMatchInfo = new AllMatchInfo();
         
         
         public override void Init()
@@ -64,6 +64,7 @@ namespace LRS
         {
             GenAwardRank();
             GenNoAwardRank();
+            m_AllMatchInfo.SetData(m_Datas);
         }
  
         public void GenAwardRank()
@@ -133,7 +134,10 @@ namespace LRS
         private void GenNoAwardRank()
         {
          LrsHelper.PrintRankCsv("==========奖励无关数据================================");
-                     
+         
+         m_AllMatchInfo.SetData(m_Datas);
+         LrsHelper.PrintRankCsv("本次比赛共计 " + m_AllMatchInfo.TotalCount + "场 其中好人获胜 " + m_AllMatchInfo.GoodCampWinCount + "场 好人胜率 " + m_AllMatchInfo.GoodCampWinCount * 100 / m_AllMatchInfo.TotalCount + "%" );
+         
          m_DayScoreRank.Init(m_Datas);
          LrsHelper.PrintRank("投票榜","排名","工号","姓名","投票分","总场",m_DayScoreRank);
         

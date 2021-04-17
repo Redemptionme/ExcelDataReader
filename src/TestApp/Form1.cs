@@ -50,6 +50,9 @@ namespace TestApp
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -63,10 +66,10 @@ namespace TestApp
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(345, 5);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Location = new System.Drawing.Point(761, 11);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 19);
+            this.button1.Size = new System.Drawing.Size(140, 38);
             this.button1.TabIndex = 0;
             this.button1.Text = "Select file";
             this.button1.UseVisualStyleBackColor = true;
@@ -74,20 +77,20 @@ namespace TestApp
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(46, 6);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Location = new System.Drawing.Point(163, 13);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(295, 21);
+            this.textBox1.Size = new System.Drawing.Size(586, 35);
             this.textBox1.TabIndex = 1;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(11, 47);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
+            this.button2.Location = new System.Drawing.Point(1008, 29);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(73, 27);
+            this.button2.Size = new System.Drawing.Size(146, 54);
             this.button2.TabIndex = 2;
-            this.button2.Text = "Process";
+            this.button2.Text = "生成排行榜";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2Click);
             // 
@@ -103,77 +106,112 @@ namespace TestApp
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 105);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridView1.Location = new System.Drawing.Point(22, 210);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 82;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(865, 393);
+            this.dataGridView1.Size = new System.Drawing.Size(1134, 0);
             this.dataGridView1.TabIndex = 3;
             // 
             // sheetCombo
             // 
             this.sheetCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sheetCombo.FormattingEnabled = true;
-            this.sheetCombo.Location = new System.Drawing.Point(88, 82);
-            this.sheetCombo.Margin = new System.Windows.Forms.Padding(2);
+            this.sheetCombo.Location = new System.Drawing.Point(176, 164);
+            this.sheetCombo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.sheetCombo.Name = "sheetCombo";
-            this.sheetCombo.Size = new System.Drawing.Size(253, 20);
+            this.sheetCombo.Size = new System.Drawing.Size(502, 32);
             this.sheetCombo.TabIndex = 4;
             this.sheetCombo.SelectedIndexChanged += new System.EventHandler(this.SheetComboSelectedIndexChanged);
             // 
             // Sheet
             // 
             this.Sheet.AutoSize = true;
-            this.Sheet.Location = new System.Drawing.Point(12, 85);
-            this.Sheet.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Sheet.Location = new System.Drawing.Point(24, 170);
+            this.Sheet.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Sheet.Name = "Sheet";
-            this.Sheet.Size = new System.Drawing.Size(77, 12);
+            this.Sheet.Size = new System.Drawing.Size(154, 24);
             this.Sheet.TabIndex = 5;
             this.Sheet.Text = "Choose sheet";
             // 
             // firstRowNamesCheckBox
             // 
             this.firstRowNamesCheckBox.AutoSize = true;
-            this.firstRowNamesCheckBox.Location = new System.Drawing.Point(15, 28);
-            this.firstRowNamesCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.firstRowNamesCheckBox.Location = new System.Drawing.Point(163, 310);
+            this.firstRowNamesCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.firstRowNamesCheckBox.Name = "firstRowNamesCheckBox";
-            this.firstRowNamesCheckBox.Size = new System.Drawing.Size(210, 16);
+            this.firstRowNamesCheckBox.Size = new System.Drawing.Size(414, 28);
             this.firstRowNamesCheckBox.TabIndex = 6;
             this.firstRowNamesCheckBox.Text = "first row contains column names";
             this.firstRowNamesCheckBox.UseVisualStyleBackColor = true;
+            this.firstRowNamesCheckBox.Visible = false;
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 508);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 126);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(887, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 20, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1178, 22);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 12);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 8);
+            this.label1.Location = new System.Drawing.Point(47, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.Size = new System.Drawing.Size(106, 24);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Path";
+            this.label1.Text = "比赛数据";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(47, 77);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 24);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "设置密码";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(163, 77);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(586, 35);
+            this.textBox2.TabIndex = 10;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(761, 75);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(140, 38);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Select file";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(887, 530);
+            this.ClientSize = new System.Drawing.Size(1178, 148);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.firstRowNamesCheckBox);
@@ -183,7 +221,7 @@ namespace TestApp
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
@@ -209,7 +247,11 @@ namespace TestApp
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private Label label1;
+        private Label label2;
+        private TextBox textBox2;
+        private Button button3;
         private DataSet ds;
+        private DataSet ds2;
 
         public Form1()
         {
@@ -277,6 +319,19 @@ namespace TestApp
                     }
                 });
 
+                using var stream2 = new FileStream(textBox2.Text, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                using IExcelDataReader reader2 = ExcelReaderFactory.CreateReader(stream2);
+
+                ds2 = reader2.AsDataSet(new ExcelDataSetConfiguration()
+                {
+                    UseColumnDataType = false,
+                    ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                    {
+                        // 判断是否使用首行列
+                        UseHeaderRow = true
+                    }
+                });
+
                 toolStripStatusLabel1.Text = "Elapsed: " + sw.ElapsedMilliseconds.ToString() + " ms (" + openTiming.ToString() + " ms to open)";
 
                 var tablenames = GetTablenames(ds.Tables);
@@ -286,7 +341,7 @@ namespace TestApp
                 if (tablenames.Count > 0)
                     sheetCombo.SelectedIndex = 0;
 
-                LrsHelper.HandleExcelData(ds); 
+                LrsHelper.HandleExcelData(ds,ds2); 
             }
             catch (Exception ex) 
             {
@@ -310,6 +365,15 @@ namespace TestApp
         private void SheetComboSelectedIndexChanged(object sender, EventArgs e)
         {
             SelectTable();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                textBox2.Text = openFileDialog1.FileName;
+            }
         }
     }
 }
