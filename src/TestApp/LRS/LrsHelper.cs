@@ -109,7 +109,11 @@ namespace LRS
                         str += ",胜率: " + (data.WinRate.Rate * 100).ToString("F2");
                         str += "%  总盘数: " + data.WinRate.AllValue;
                         str += "  积分: " + data.Score;
-                        str += "  操作分: " + data.OpScore;
+                        if (LrsHelper.IsGodCard(eCard))
+                        {
+                            // 神
+                            str += "  操作分: " + data.OpScore;    
+                        }
                     }
                     else
                     {
@@ -184,6 +188,17 @@ namespace LRS
         {
             return eGameCard > EGameCard.BadCardBegin && eGameCard < EGameCard.BadCardEnd;
         }
+
+        public static bool IsGodCard(EGameCard eGameCard)
+        {
+            return IsGoodCard(eGameCard) && !IsCmCard(eGameCard);
+        }
+
+        public static bool IsCmCard(EGameCard eGameCard)
+        {
+            return eGameCard == EGameCard.Cm;
+        }
+        
 
         public static bool IsContain(EGameCard eGameCard1, EGameCard eGameCard2)
         {
