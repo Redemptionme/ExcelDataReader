@@ -32,12 +32,12 @@ namespace LRS.Rank
             int rankNum = GetPlayerRank(player);
             if (rankNum == 0)
             {
-                return "未进榜";    
+                return "未拿过";  
             }
             else
             {
                 T e = GetPlayerData(player);
-                return e.CompareValue + "分    排名 " + rankNum;
+                return e.CompareValue + "分排" + rankNum + "名   ";
             }
         }
         public int GetPlayerRank(PlayerInfo player)

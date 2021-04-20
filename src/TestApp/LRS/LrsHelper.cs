@@ -87,16 +87,16 @@ namespace LRS
                 str += "," + DataMgr.Inst.m_scoreRank.PrintPlayerRank(item.Key);
                 str += "," + DataMgr.Inst.m_timeRank.PrintPlayerRank(item.Key);
                 
-                str += ",号令天下Mvp " + DataMgr.Inst.m_mvpRank.PrintPlayerRank(item.Key) 
-                    + "  正义领袖 " +DataMgr.Inst.m_goodCampRank.PrintPlayerRank(item.Key) 
-                    + "  狼王榜 " + DataMgr.Inst.m_badCampRank.PrintPlayerRank(item.Key);
+                str += ",【号令天下Mvp】 " + DataMgr.Inst.m_mvpRank.PrintPlayerRank(item.Key) 
+                    + "  【正义领袖】 " +DataMgr.Inst.m_goodCampRank.PrintPlayerRank(item.Key) 
+                    + "  【狼王榜】 " + DataMgr.Inst.m_badCampRank.PrintPlayerRank(item.Key);
                     
-                str += ",预言家 " + DataMgr.Inst.m_yyjRank.PrintPlayerRank(item.Key)
-                    + " 女巫 " + DataMgr.Inst.m_nwRank.PrintPlayerRank(item.Key)
-                    + " 猎人 " + DataMgr.Inst.m_lrRank.PrintPlayerRank(item.Key)
-                    + " 猎魔人" + DataMgr.Inst.m_lmrRank.PrintPlayerRank(item.Key)
-                    + " 守卫" + DataMgr.Inst.m_swRank.PrintPlayerRank(item.Key)
-                    + " 徒手抓狼" + DataMgr.Inst.m_noSkillRank.PrintPlayerRank(item.Key);
+                str += ",【预言家】: " + DataMgr.Inst.m_yyjRank.PrintPlayerRank(item.Key)
+                    + " 【女巫】:" + DataMgr.Inst.m_nwRank.PrintPlayerRank(item.Key)
+                    + " 【猎人】:" + DataMgr.Inst.m_lrRank.PrintPlayerRank(item.Key)
+                    + " 【猎魔人】:" + DataMgr.Inst.m_lmrRank.PrintPlayerRank(item.Key)
+                    + " 【守卫】:" + DataMgr.Inst.m_swRank.PrintPlayerRank(item.Key)
+                    + " 【徒手抓狼】:" + DataMgr.Inst.m_noSkillRank.PrintPlayerRank(item.Key);
                 
                 // 胜率数据集合
                 for (int i = (int)EGameCard.None; i < (int)EGameCard.FG; i++)
@@ -106,14 +106,14 @@ namespace LRS
 
                     if (dataSystem.CardScoreDic.TryGetValue(eCard,out var data))
                     {
-                        str += ",胜率 " + (data.WinRate.Rate * 100).ToString("F2");
-                        str += "% 总盘数 " + data.WinRate.AllValue;
-                        str += " 积分 " + data.Score;
-                        str += " 操作分 " + data.OpScore;
+                        str += ",胜率: " + (data.WinRate.Rate * 100).ToString("F2");
+                        str += "%  总盘数: " + data.WinRate.AllValue;
+                        str += "  积分: " + data.Score;
+                        str += "  操作分: " + data.OpScore;
                     }
                     else
                     {
-                        str += ",";
+                        str += ",未拿过";
                     } 
                 }
                 
