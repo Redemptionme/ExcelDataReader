@@ -62,9 +62,9 @@ namespace LRS
 
         public void GenMatchRank()
         {
+            GenMatchInfo();
             GenAwardRank();
             GenNoAwardRank();
-            m_AllMatchInfo.SetData(m_Datas);
         }
  
         public void GenAwardRank()
@@ -130,13 +130,19 @@ namespace LRS
             LrsHelper.PrintRank("徒手抓狼榜","排名","工号","姓名","投票分","总场",m_noSkillRank);
 
         }
-        
+
+        private void GenMatchInfo()
+        {
+            var lastInfo = m_Datas[m_Datas.Count - 1].Info;
+            var Day = lastInfo.Year + "-" + lastInfo.Month.ToString("D2") + "-" + lastInfo.Day.ToString("D2") + "-周" + LrsHelper.OneBitNumberToChinese(lastInfo.WeekDay);
+            LrsHelper.PrintRankCsv("!==========截至 " + Day);
+            m_AllMatchInfo.SetData(m_Datas);
+            LrsHelper.PrintRankCsv("本次比赛共计 " + m_AllMatchInfo.TotalCount + "场 其中好人获胜 " + m_AllMatchInfo.GoodCampWinCount + "场 好人胜率 " + m_AllMatchInfo.GoodCampWinCount * 100 / m_AllMatchInfo.TotalCount + "%" );
+            LrsHelper.PrintRankCsv("" );
+        }
         private void GenNoAwardRank()
         {
-         LrsHelper.PrintRankCsv("==========奖励无关数据================================");
-         
-         m_AllMatchInfo.SetData(m_Datas);
-         LrsHelper.PrintRankCsv("本次比赛共计 " + m_AllMatchInfo.TotalCount + "场 其中好人获胜 " + m_AllMatchInfo.GoodCampWinCount + "场 好人胜率 " + m_AllMatchInfo.GoodCampWinCount * 100 / m_AllMatchInfo.TotalCount + "%" );
+         LrsHelper.PrintRankCsv("!==========奖励无关数据================================");
          
          m_DayScoreRank.Init(m_Datas);
          LrsHelper.PrintRank("投票榜","排名","工号","姓名","投票分","总场",m_DayScoreRank);

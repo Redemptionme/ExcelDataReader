@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Text;
 using LRS.Rank;
 
 namespace LRS
@@ -132,7 +133,7 @@ namespace LRS
 
         public static void WriteFile(string fileName, string str, bool append = true)
         {
-            using (var sw = new StreamWriter(fileName, append))
+            using (var sw = new StreamWriter(fileName, append,Encoding.UTF8))
             {
                 sw.WriteLine(str);
             }
@@ -262,6 +263,25 @@ namespace LRS
 
             return "错误卡牌";
         }
+        
+        //数字1-9转换为中文数字
+        public static string OneBitNumberToChinese(string num){
+            string numStr = "123456789";
+            string chineseStr = "一二三四五六七八九";
+            string result = "";
+            int numIndex=numStr.IndexOf(num);
+            if(numIndex>-1){
+                result=chineseStr.Substring(numIndex,1);
+            }
+            return result;
+        }
+        
+        //数字1-9转换为中文数字
+        public static string OneBitNumberToChinese(int num){
+            return OneBitNumberToChinese(num.ToString());
+        }
+        
+        
 
     }
 }
