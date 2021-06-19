@@ -69,65 +69,64 @@ namespace LRS
  
         public void GenAwardRank()
         {
-            m_scoreRank.Init(m_Datas);
-            LrsHelper.PrintRank("积分榜","排名","工号","姓名","积分","总场",m_scoreRank);
-            
-            m_timeRank.Init(m_Datas);
-            LrsHelper.PrintRank("次数排行版","排名","工号","姓名","次数","总场",m_timeRank);
+            m_scoreRank.Init(m_Datas,null,false);
+            m_timeRank.Init(m_Datas,null,false);
+            LrsHelper.PrintRank("积分榜","排名","工号","姓名","积分","对应场次",m_scoreRank);
+            LrsHelper.PrintRank("次数排行版","排名","工号","姓名","次数","对应场次",m_timeRank);
 
             m_mvpRank.Init(m_Datas);
-            LrsHelper.PrintRank("MVP榜","排名","工号","姓名","MVP","总场",m_mvpRank);
+            LrsHelper.PrintRank("MVP榜","排名","工号","姓名","MVP","对应场次",m_mvpRank);
             
             m_godRank.Init(m_Datas);
-            LrsHelper.PrintRank("上帝版","排名","工号","姓名","次数","总场",m_godRank);
+            //LrsHelper.PrintRank("上帝版","排名","工号","姓名","次数","总场",m_godRank);
             
             m_goodCampRank.Init(m_Datas, playerData =>
             {
                 return LrsHelper.IsGoodCard(playerData.Card);
             });
-            LrsHelper.PrintRank("正义领袖榜","排名","工号","姓名","积分","总场",m_goodCampRank);
+            LrsHelper.PrintRank("正义领袖榜","排名","工号","姓名","积分","对应场次",m_goodCampRank);
             
             m_badCampRank.Init(m_Datas, playerData =>
             {
                 return LrsHelper.IsBadCard(playerData.Card);;
             });
-            LrsHelper.PrintRank("狼王榜","排名","工号","姓名","积分","总场",m_badCampRank);
+            LrsHelper.PrintRank("狼王榜","排名","工号","姓名","积分","对应场次",m_badCampRank);
 
             m_yyjRank.Init(m_Datas, player =>
             {
                 return player.Card == EGameCard.Yyj;
             });
-            LrsHelper.PrintRank("预言家榜","排名","工号","姓名","操作分","总场",m_yyjRank);
+            LrsHelper.PrintRank("预言家榜","排名","工号","姓名","操作分","对应场次",m_yyjRank);
             
             m_nwRank.Init(m_Datas, player =>
             {
                 return player.Card == EGameCard.Nw;
             });
-            LrsHelper.PrintRank("女巫榜","排名","工号","姓名","操作分","总场",m_nwRank);
+            LrsHelper.PrintRank("女巫榜","排名","工号","姓名","操作分","对应场次",m_nwRank);
             
             m_lrRank.Init(m_Datas, player =>
             {
                 return player.Card == EGameCard.Lr;
             });
-            LrsHelper.PrintRank("猎人榜","排名","工号","姓名","操作分","总场",m_lrRank);
+            LrsHelper.PrintRank("猎人榜","排名","工号","姓名","操作分","对应场次",m_lrRank);
            
             m_lmrRank.Init(m_Datas, player =>
             {
                 return player.Card == EGameCard.Lmr;
             });
-            LrsHelper.PrintRank("猎魔人榜","排名","工号","姓名","操作分","总场",m_lmrRank);
+            LrsHelper.PrintRank("猎魔人榜","排名","工号","姓名","操作分","对应场次",m_lmrRank);
             
             m_swRank.Init(m_Datas, player =>
             {
                 return player.Card == EGameCard.Sw;
             });
-            LrsHelper.PrintRank("守卫榜","排名","工号","姓名","操作分","总场",m_swRank);
+            LrsHelper.PrintRank("守卫榜","排名","工号","姓名","操作分","对应场次",m_swRank);
             
             m_noSkillRank.Init(m_Datas, player =>
             {
                 return player.Card == EGameCard.Cm || player.Card == EGameCard.Bc;
             });
-            LrsHelper.PrintRank("徒手抓狼榜","排名","工号","姓名","投票分","总场",m_noSkillRank);
+            LrsHelper.PrintRank("徒手抓狼榜","排名","工号","姓名","投票分","对应场次",m_noSkillRank);
 
         }
 
@@ -166,7 +165,7 @@ namespace LRS
 
              var cardName = LrsHelper.GetCardName(eCard);
              
-             LrsHelper.PrintRateRank(cardName + "胜率榜","排名","工号","姓名","百分比","总场",cardRateRank);
+             LrsHelper.PrintRateRank(cardName + "胜率榜","排名","工号","姓名","百分比","对应场次",cardRateRank);
          } 
         }
 

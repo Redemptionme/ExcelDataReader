@@ -19,11 +19,13 @@ namespace LRS
             string headName4,string headName5,BaseRank<BaseRankData> rank)
         {
             PrintRankCsv(rankName);
-            PrintRankCsv(headName1 + "," + headName2+ "," + headName3+ "," + headName4  + "," + headName5);
+            PrintRankCsv(headName1 + "," + headName2+ "," + headName3+ "," + headName4  + "," + headName5 + "," + "游戏总场");
+            
             for (int i = 0; i < rank.m_dataList.Count; i++)
             {
                 var data = rank.m_dataList[i];
-                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + data.CompareValue + "," + data.allTimes);
+                int totalTimes = DataMgr.Inst.m_timeRank.GetTotalTimes(data.Player);
+                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + data.CompareValue + "," + data.allTimes +"," + totalTimes);
             }
             PrintRankCsv("");
         }

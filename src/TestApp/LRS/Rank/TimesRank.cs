@@ -10,9 +10,14 @@ namespace LRS.Rank
             
         }
 
-        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        public int GetTotalTimes(PlayerInfo info)
         {
-            base.Init(datas, checkFunc);
+            return m_dataDic.TryGetValue(info,out var scoreData) ? scoreData.allTimes : 0;
+        }
+
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null,bool bSortTimes = true)
+        {
+            base.Init(datas, checkFunc,bSortTimes);
             foreach (var matchdata in datas)
             {
                 foreach (var data in matchdata.playerDatas)

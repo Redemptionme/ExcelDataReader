@@ -11,9 +11,9 @@ namespace LRS.Rank
             
         }
 
-        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null,bool bSortTimes = true)
         {
-            base.Init(datas, checkFunc);
+            base.Init(datas, checkFunc,bSortTimes);
             m_checkFunc = checkFunc;
             foreach (var matchdata in datas)
             {

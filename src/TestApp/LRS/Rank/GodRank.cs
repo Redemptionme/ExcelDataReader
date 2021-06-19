@@ -11,9 +11,9 @@ namespace LRS.Rank
             
         }
 
-        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null,bool bSortTimes = true)
         {
-            base.Init(datas, checkFunc);
+            base.Init(datas, checkFunc,bSortTimes);
             foreach (var matchdata in datas)
             {
                 if (!m_dataDic.TryGetValue(matchdata.Info.God,out var timeRankData))

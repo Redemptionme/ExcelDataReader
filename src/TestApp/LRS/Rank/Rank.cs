@@ -18,13 +18,15 @@ namespace LRS.Rank
     }
     public class BaseRank<T> where T: BaseRankData
     {
+        private bool m_bTotalTimesSort = true;
         public List<T> m_dataList = new List<T>();
         public Dictionary<PlayerInfo, T> m_dataDic = new Dictionary<PlayerInfo, T>();
 
-        public virtual void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null)
+        public virtual void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null,bool timeSort = true)
         {
             m_dataDic.Clear();
             m_dataDic.Clear();
+            m_bTotalTimesSort = timeSort;
         }
 
         public string PrintPlayerRank(PlayerInfo player)
@@ -67,7 +69,18 @@ namespace LRS.Rank
         {
             // 降序
             //m_dataList.Sort((x, y) => -x.CompareTo(y));
-            m_dataList.Sort((x, y) => -x.CompareTo(y) * 2 + -x.allTimes.CompareTo(y.allTimes));
+            if (m_bTotalTimesSort)
+            {
+                m_dataList.Sort((x, y) => -x.CompareTo(y) * 4 +
+                                          -(DataMgr.Inst.m_timeRank.GetTotalTimes(x.Player).CompareTo(DataMgr.Inst.m_timeRank.GetTotalTimes(y.Player))) *2
+                                          + x.allTimes.CompareTo(y.allTimes)
+                                          );    
+            }
+            else
+            {
+                m_dataList.Sort((x, y) => -x.CompareTo(y) * 2 +
+                                          x.allTimes.CompareTo(y.allTimes));  
+            }
         }
         
         public void Clear()
