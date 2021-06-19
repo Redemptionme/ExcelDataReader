@@ -25,7 +25,7 @@ namespace LRS.Rank
                     }
 
                     m_dataDic[data.Player].CompareValue  += data.MvpScore;
-                    m_dataDic[data.Player].allTimes  += 1;
+                    m_dataDic[data.Player].Count  += 1;
                 }
             }
             foreach (var item in m_dataDic)

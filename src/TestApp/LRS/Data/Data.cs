@@ -36,7 +36,7 @@ namespace LRS
     
     public class MatchInfo
     {
-        public int AllDay = 0;
+        public int DayInfo = 0;
         public int Year = 0;
         public int Month = 0;
         public int Day = 0;
@@ -55,7 +55,7 @@ namespace LRS
 
         public override int GetHashCode()
         {
-            return AllDay + 100000000 * CurTime;
+            return DayInfo + 100000000 * CurTime;
         }
 
 
@@ -65,7 +65,7 @@ namespace LRS
             Year = int.Parse(tabNames[0]);
             Month = int.Parse(tabNames[1]);
             Day = int.Parse(tabNames[2]);
-            AllDay = Year * 10000 + Month * 100 + Day;
+            DayInfo = Year * 10000 + Month * 100 + Day;
 
             string weekday = tabNames[3];
             WeekDay = weekday switch

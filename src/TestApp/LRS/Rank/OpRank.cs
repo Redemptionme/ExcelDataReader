@@ -33,7 +33,7 @@ namespace LRS.Rank
                     }
 
                     m_dataDic[data.Player].CompareValue  += data.OpScore;
-                    m_dataDic[data.Player].allTimes  += 1;
+                    m_dataDic[data.Player].Count  += 1;
                 }
             }
 

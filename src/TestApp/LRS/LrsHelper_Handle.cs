@@ -131,7 +131,7 @@ namespace LRS
                 
                 if (totalScore != winScore + dayScore + extendScore)
                 {
-                    throw new System.NotImplementedException( info.AllDay+ " " + curLine +"行"+ playerInfo.Name + "总分数算错");
+                    throw new System.NotImplementedException( info.DayInfo+ " " + curLine +"行"+ playerInfo.Name + "总分数算错");
                 }
                 
                 var opScore = stringToint(tab.Rows[curLine][12]);

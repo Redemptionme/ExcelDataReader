@@ -24,7 +24,7 @@ namespace LRS.Rank
                 }
 
                 m_dataDic[matchdata.Info.God].CompareValue  += 1;
-                m_dataDic[matchdata.Info.God].allTimes  += 1;
+                m_dataDic[matchdata.Info.God].Count  += 1;
             }
 
             

@@ -39,7 +39,7 @@ namespace LRS.Rank
                     m_dataDic[data.Player].RateData.WinValue  += data.WinScore > 0 ? 1 : 0;
                     m_dataDic[data.Player].RateData.AllValue  += 1;
                     m_dataDic[data.Player].RateData.CalRate();
-                    m_dataDic[data.Player].allTimes  += 1;
+                    m_dataDic[data.Player].Count  += 1;
                     m_dataDic[data.Player].CompareValue  = (int)(m_dataDic[data.Player].RateData.Rate * 10000);
                 }
             }
@@ -55,7 +55,7 @@ namespace LRS.Rank
         protected override void Sort()
         {
             m_dataList.Sort((x, y) => -x.CompareTo(y) * 2 +
-                                      - x.allTimes.CompareTo(y.allTimes));
+                                      - x.Count.CompareTo(y.Count));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace LRS
             {
                 var data = rank.m_dataList[i];
                 int totalTimes = DataMgr.Inst.m_timeRank.GetTotalTimes(data.Player);
-                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + data.CompareValue + "," + data.allTimes +"," + totalTimes);
+                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + data.CompareValue + "," + data.Count +"," + totalTimes);
             }
             PrintRankCsv("");
         }
@@ -39,7 +39,7 @@ namespace LRS
             {
                 var data = rank.m_dataList[i];
 
-                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + (data.RateData.Rate * 100).ToString("F2") + "%," + data.allTimes);
+                PrintRankCsv((i+1) + "," + data.Player.WorkNum + "," + data.Player.Name + "," + (data.RateData.Rate * 100).ToString("F2") + "%," + data.Count);
             }
             PrintRankCsv("");
         }

@@ -12,7 +12,7 @@ namespace LRS.Rank
 
         public int GetTotalTimes(PlayerInfo info)
         {
-            return m_dataDic.TryGetValue(info,out var scoreData) ? scoreData.allTimes : 0;
+            return m_dataDic.TryGetValue(info,out var scoreData) ? scoreData.Count : 0;
         }
 
         public override void Init(List<MatchData> datas, CheckPlayerFunc checkFunc = null,bool bSortTimes = true)
@@ -30,7 +30,7 @@ namespace LRS.Rank
                     }
 
                     m_dataDic[data.Player].CompareValue  += 1;
-                    m_dataDic[data.Player].allTimes  += 1;
+                    m_dataDic[data.Player].Count  += 1;
                 }
             }
 

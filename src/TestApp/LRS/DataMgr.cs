@@ -161,7 +161,7 @@ namespace LRS
              
              m_winRateRankDic.Add(eCard,cardRateRank);
              
-             if (cardRateRank.m_dataList.Count == 0 || cardRateRank.m_dataList[0].allTimes == 0) continue;
+             if (cardRateRank.m_dataList.Count == 0 || cardRateRank.m_dataList[0].Count == 0) continue;
 
              var cardName = LrsHelper.GetCardName(eCard);
              

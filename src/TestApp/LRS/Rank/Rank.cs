@@ -8,7 +8,7 @@ namespace LRS.Rank
     {
         public PlayerInfo Player;
         public int CompareValue = 0;
-        public int allTimes;
+        public int Count;
         
         //ComparetTo:大于 1； 等于 0； 小于 -1；
         public int CompareTo(BaseRankData p)
@@ -73,13 +73,13 @@ namespace LRS.Rank
             {
                 m_dataList.Sort((x, y) => -x.CompareTo(y) * 4 +
                                           -(DataMgr.Inst.m_timeRank.GetTotalTimes(x.Player).CompareTo(DataMgr.Inst.m_timeRank.GetTotalTimes(y.Player))) *2
-                                          + x.allTimes.CompareTo(y.allTimes)
+                                          + x.Count.CompareTo(y.Count)
                                           );    
             }
             else
             {
                 m_dataList.Sort((x, y) => -x.CompareTo(y) * 2 +
-                                          x.allTimes.CompareTo(y.allTimes));  
+                                          x.Count.CompareTo(y.Count));  
             }
         }
         
