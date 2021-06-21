@@ -69,8 +69,8 @@ namespace LRS
  
         public void GenAwardRank()
         {
-            m_scoreRank.Init(m_Datas,null,false);
             m_timeRank.Init(m_Datas,null,false);
+            m_scoreRank.Init(m_Datas,null,true);
             LrsHelper.PrintRank("积分榜","排名","工号","姓名","积分","对应场次",m_scoreRank);
             LrsHelper.PrintRank("次数排行版","排名","工号","姓名","次数","对应场次",m_timeRank);
 
