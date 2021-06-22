@@ -33,6 +33,10 @@ namespace LRS
         // 游戏总数据
         public AllMatchInfo m_AllMatchInfo = new AllMatchInfo();
         
+        // 特殊被操作数据
+        public Day1BeOpRank m_yyjBeOpRank = new Day1BeOpRank();
+        public Day1BeOpRank m_langrBeOpRank = new Day1BeOpRank();
+        
         
         public override void Init()
         {
@@ -167,6 +171,21 @@ namespace LRS
              
              LrsHelper.PrintRateRank(cardName + "胜率榜","排名","工号","姓名","百分比","对应场次",cardRateRank);
          } 
+         
+         m_yyjBeOpRank.Init(m_Datas, gameCard =>
+             {
+                 return gameCard == EGameCard.Yyj;
+             }
+         );
+         LrsHelper.PrintRank("首验榜","排名","工号","姓名","次数","对应场次",m_yyjBeOpRank);
+         
+         m_langrBeOpRank.Init(m_Datas, gameCard =>
+             {
+                 return gameCard == EGameCard.Langr;
+             }
+         );
+         LrsHelper.PrintRank("首刀榜","排名","工号","姓名","次数","对应场次",m_langrBeOpRank);
+         
         }
 
         public void GenDataSystem()

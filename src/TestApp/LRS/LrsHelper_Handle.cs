@@ -141,6 +141,56 @@ namespace LRS
                 matchData.playerDatas.Add(playerData);
             } 
             
+            
+            // 操作区,假如每个人一个身份，加首尾也最多那么多行
+            for (int i = 0; i < BaseInfoHelper.PlayerNum + 2; i++)
+            {
+                int curLine = starline + BaseInfoHelper.PlayerNum + 2 + i;
+                
+                var content = tab.Rows[curLine][0].ToString();
+
+                // 首行
+                if (content == "Day1夜") continue;
+
+                // 尾行
+                if (content == "上警环节") break;
+                
+                var eGameCard = LrsHelper.GetCard(content);
+                
+                // 因为目前身份操作有中文字符,所以只记录狼人和预言家
+                bool bAdapt = eGameCard == EGameCard.Langr ||
+                              eGameCard == EGameCard.Yyj ||
+                              eGameCard == EGameCard.Lr;
+                
+                if(!bAdapt) continue;
+
+                if (!matchData.playerBeOp.TryGetValue(eGameCard,out var list))
+                {
+                    matchData.playerBeOp[eGameCard] = new List<PlayerInfo>();
+                }
+
+                // 6 夜，操作内容位置
+                var opList = new List<int>();
+                opList.Add(1);
+                opList.Add(5);
+                opList.Add(7);
+                opList.Add(9);
+                opList.Add(11);
+                opList.Add(13);
+                    
+                    
+                for (int j = 0; j < opList.Count; j++)
+                {
+                    var yIndex = opList[j];
+                    var beOpPlayerGameNum = stringToint(tab.Rows[curLine][yIndex]);
+                    
+                    if (beOpPlayerGameNum == 0) continue;
+                    
+                    var beOpPlayer = matchData.GetPlayerInfoByGameNum(beOpPlayerGameNum);
+                    matchData.playerBeOp[eGameCard].Add(beOpPlayer);    
+                }
+            }
+            
             DataMgr.Inst.AddData(matchData);
         }
 

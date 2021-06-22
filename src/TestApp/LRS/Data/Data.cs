@@ -172,6 +172,22 @@ namespace LRS
     {
         public MatchInfo Info;
         public List<PlayerData> playerDatas = new List<PlayerData>();
+        public Dictionary<EGameCard, List<PlayerInfo>> playerBeOp = new Dictionary<EGameCard, List<PlayerInfo>>();
+
+        public PlayerInfo GetPlayerInfoByGameNum(int num)
+        {
+            for (int i = 0; i < playerDatas.Count; i++)
+            {
+                var data = playerDatas[i];
+                if (num == data.GameNum)
+                {
+                    return data.Player;
+                }
+            }
+
+            return null;
+        }
+        
     }
 
     public class DataSystemCardData
