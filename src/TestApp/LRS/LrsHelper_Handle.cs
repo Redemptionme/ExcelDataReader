@@ -157,13 +157,6 @@ namespace LRS
                 
                 var eGameCard = LrsHelper.GetCard(content);
                 
-                // 因为目前身份操作有中文字符,所以只记录狼人和预言家
-                bool bAdapt = eGameCard == EGameCard.Langr ||
-                              eGameCard == EGameCard.Yyj ||
-                              eGameCard == EGameCard.Lr;
-                
-                if(!bAdapt) continue;
-
                 if (!matchData.playerBeOp.TryGetValue(eGameCard,out var list))
                 {
                     matchData.playerBeOp[eGameCard] = new List<PlayerInfo>();
@@ -182,7 +175,30 @@ namespace LRS
                 for (int j = 0; j < opList.Count; j++)
                 {
                     var yIndex = opList[j];
-                    var beOpPlayerGameNum = stringToint(tab.Rows[curLine][yIndex]);
+                    var rowContent = tab.Rows[curLine][yIndex].ToString();
+                    if (eGameCard == EGameCard.Nw )
+                    {
+                        if (rowContent.Contains("救"))
+                        {
+                            continue;
+                        }
+                        else if (rowContent.Contains("毒"))
+                        {
+                            rowContent = rowContent[1].ToString();
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                    else if(eGameCard == EGameCard.Sw||eGameCard == EGameCard.Lr)
+                    {
+                        // 先不处理
+                        continue;
+                    }
+                    
+                    
+                    var beOpPlayerGameNum = stringToint(rowContent);
                     
                     if (beOpPlayerGameNum == 0) continue;
                     

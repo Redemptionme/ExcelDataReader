@@ -2,13 +2,13 @@
 
 namespace LRS.Rank
 {
-    public class Day1BeOpRank: BaseRank<BaseRankData>
+    public class BeOpRank: BaseRank<BaseRankData>
     {
         public delegate bool CheckGameCardFunc(EGameCard eGameCard);
         
         private CheckGameCardFunc m_checkGameCardFunc;
         
-        public Day1BeOpRank()
+        public BeOpRank()
         {
             
         }
@@ -27,6 +27,7 @@ namespace LRS.Rank
                     }
 
                     var list = matchdata.playerBeOp[item.Key];
+                    if(list.Count == 0) continue;
 
                     var data = list[0];
                     

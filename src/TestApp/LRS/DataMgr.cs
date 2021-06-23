@@ -34,10 +34,10 @@ namespace LRS
         public AllMatchInfo m_AllMatchInfo = new AllMatchInfo();
         
         // 特殊被操作数据
-        public Day1BeOpRank m_yyjBeOpRank = new Day1BeOpRank();
-        public Day1BeOpRank m_langrBeOpRank = new Day1BeOpRank();
-        
-        
+        public BeOpRank m_yyjBeOpRank = new BeOpRank();
+        public BeOpRank m_langrBeOpRank = new BeOpRank();
+        public BeOpRank m_nwBeOpRank = new BeOpRank();
+
         public override void Init()
         {
             
@@ -185,6 +185,13 @@ namespace LRS
              }
          );
          LrsHelper.PrintRank("首刀榜","排名","工号","姓名","次数","对应场次",m_langrBeOpRank);
+         
+         m_nwBeOpRank.Init(m_Datas, gameCard =>
+             {
+                 return gameCard == EGameCard.Nw;
+             }
+         );
+         LrsHelper.PrintRank("吃毒榜","排名","工号","姓名","次数","对应场次",m_nwBeOpRank);
          
         }
 
